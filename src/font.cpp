@@ -642,6 +642,13 @@ bool Font::load_ttf_mem( const uint8_t *ttf ) {
     em_line_gap = ttf_i16( hhea + 8 );
 
     uint32_t num_hmtx = ttf_u16( hhea + 34 );
+
+    const uint8_t *os2 = find_table( ttf, "OS/2" );
+    if ( os2 ) {
+        em_ascent  = ttf_i16( os2 + 68 );
+        em_descent = ttf_i16( os2 + 70 );
+        em_line_gap = ttf_i16( os2 + 72 );
+    }
     
     float scale = 1.0f / em_ascent;
     ascent   = 1.0;
